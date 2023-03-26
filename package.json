@@ -1,0 +1,22 @@
+{
+  "name": "il6",
+  "version": "1.0.0",
+  "description": "Please see https://docs.google.com/document/d/1pzz364ohjtG3yqlw9ZTahNHgElqI3kEuGg6NWuvmwlg/edit?usp=sharing for documentation.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lahnstrom/IL6.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lahnstrom/IL6/issues"
+  },
+  "homepage": "https://github.com/lahnstrom/IL6#readme",
+  "dependencies": {
+    "puppeteer": "^19.8.0"
+  }
+}
