@@ -1,4 +1,5 @@
 const puppeteer = require("puppeteer")
+const fs = require("fs")
 
 function delay(time) {
   return new Promise(function (resolve) {
@@ -14,6 +15,8 @@ async function extract() {
   )
   await page.setViewport({ width: 1080, height: 1024 })
   let cardsLength = 0
+  let start = 0
+  const links = []
 
   while (true) {
     console.log("querying")
@@ -27,9 +30,22 @@ async function extract() {
     }
     cardsLength = cards.length
 
-    let start = 0
     for (let i = start; i < cardsLength; i++) {
       await cards[i].click()
+
+      const link = await page.$("a.WpHeLc")
+      const href = await link.getProperty("href")
+      const rawHref = await href.jsonValue()
+
+      const name = await page.$("h1.SAyv5")
+      const nameText = await name.getProperty("textContent")
+      const rawName = await nameText.jsonValue()
+
+      const date = await page.$("span.gHkX8d")
+      const dateText = await date.getProperty("textContent")
+      const rawDate = await dateText.jsonValue()
+
+      links.push([rawName, rawDate, rawHref])
 
       start = i + 1
     }
@@ -38,9 +54,12 @@ async function extract() {
 
     // Let the page load for a while
     console.log("timing out")
-    await delay("5000")
+    await delay("2000")
     console.log("go again")
   }
+  console.log(links)
+  const output = links.map((row) => row.join(";")).join("\n")
+  fs.writeFileSync("./out/datasearch.csv", output)
 }
 
 extract()
